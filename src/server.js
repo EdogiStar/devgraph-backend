@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
+const developerRoutes = require("./routes/developer.routes");
+
 const app = express();
 
 app.use(cors());
@@ -12,6 +14,8 @@ app.get("/", (req, res) => {
     message: "DevGraph API is running"
   });
 });
+
+app.use("/api/developers", developerRoutes);
 
 const PORT = process.env.PORT || 5000;
 
