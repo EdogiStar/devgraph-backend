@@ -47,7 +47,8 @@ const GET_SHARED_SKILLS = `
 
   WHERE d1 <> d2
 
-  RETURN d2.name AS developer,
+  RETURN d2.id AS developerId,
+         d2.name AS developer,
          collect(s.name) AS sharedSkills
   ORDER BY d2.name
 `;

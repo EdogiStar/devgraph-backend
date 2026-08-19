@@ -119,8 +119,9 @@ async function getDeveloperConnections(req, res) {
     );
 
     const connections = result.records.map((record) => ({
-      developer: record.get("developer"),
-      sharedSkills: record.get("sharedSkills")
+        developerId: record.get("developerId"),
+        developer: record.get("developer"),
+        sharedSkills: record.get("sharedSkills")
     }));
 
     res.json({
