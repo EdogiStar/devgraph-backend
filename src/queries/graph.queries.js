@@ -52,11 +52,39 @@ const GET_SHARED_SKILLS = `
   ORDER BY d2.name
 `;
 
+const GET_ALL_DEVELOPERS = `
+  MATCH (d:Developer)
+  RETURN d
+  ORDER BY d.name
+`;
+
+const GET_GRAPH_STATS = `
+  CALL {
+    MATCH (d:Developer)
+    RETURN count(d) AS developers
+  }
+  CALL {
+    MATCH (p:Project)
+    RETURN count(p) AS projects
+  }
+  CALL {
+    MATCH (s:Skill)
+    RETURN count(s) AS skills
+  }
+  CALL {
+    MATCH (t:Technology)
+    RETURN count(t) AS technologies
+  }
+  RETURN developers, projects, skills, technologies
+`;
+
 module.exports = {
   GET_DEVELOPER,
   GET_DEVELOPER_SKILLS,
   GET_DEVELOPER_PROJECTS,
   GET_PROJECT_TECHNOLOGIES,
   GET_DEVELOPER_TECHNOLOGIES,
-  GET_SHARED_SKILLS
+  GET_SHARED_SKILLS,
+  GET_ALL_DEVELOPERS,
+  GET_GRAPH_STATS
 };

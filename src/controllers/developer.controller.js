@@ -5,7 +5,9 @@ const {
   GET_DEVELOPER_SKILLS,
   GET_DEVELOPER_PROJECTS,
   GET_DEVELOPER_TECHNOLOGIES,
-  GET_SHARED_SKILLS
+  GET_SHARED_SKILLS,
+  GET_ALL_DEVELOPERS,
+GET_GRAPH_STATS
 } = require("../queries/graph.queries");
 
 async function getDeveloper(req, res) {
@@ -139,8 +141,69 @@ async function getDeveloperConnections(req, res) {
   }
 }
 
+async function getDevelopers(req, res) {
+  const session = driver.session();
+
+  try {
+    const result = await session.run(GET_ALL_DEVELOPERS);
+
+    const developers = result.records.map(
+      (record) => record.get("d").properties
+    );
+
+    res.json({
+      success: true,
+      data: developers
+    });
+
+  } catch (error) {
+    console.error("Get developers error:", error.message);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve developers"
+    });
+
+  } finally {
+    await session.close();
+  }
+}
+
+async function getStats(req, res) {
+  const session = driver.session();
+
+  try {
+    const result = await session.run(GET_GRAPH_STATS);
+
+    const record = result.records[0];
+
+    res.json({
+      success: true,
+      data: {
+        developers: record.get("developers").toNumber(),
+        projects: record.get("projects").toNumber(),
+        skills: record.get("skills").toNumber(),
+        technologies: record.get("technologies").toNumber()
+      }
+    });
+
+  } catch (error) {
+    console.error("Get stats error:", error.message);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve graph statistics"
+    });
+
+  } finally {
+    await session.close();
+  }
+}
+
 module.exports = {
   getDeveloper,
+  getDevelopers,
+  getStats,
   getDeveloperTechnologies,
   getDeveloperConnections
 };
