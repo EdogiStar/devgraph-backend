@@ -148,15 +148,15 @@ npm start
 
 ### API Status
 
-![API Status](.src/screenshots/api-status.jpg)
+![API Status](./src/screenshots/api-status.jpg)
 
 ### Developer API
 
-![Developer API](.src/screenshots/developer-api.jpg)
+![Developer API](./src/screenshots/developer-api.jpg)
 
 ### Graph Statistics
 
-![Graph Statistics](.src/screenshots/graph-stats.jpg)
+![Graph Statistics](./src/screenshots/graph-stats.jpg)
 
 ## Frontend
 
